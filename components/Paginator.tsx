@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router'
 
 interface PaginatorProps {
@@ -13,7 +12,7 @@ export default function Paginator({ countPages }: PaginatorProps): JSX.Element {
       <div className="flex justify-center">
         <div className="border-2">
           {pages.map((page, index) => (
-            <a><button className="w-12 h-8 hover:bg-green-200"
+            <a key={index + 1}><button className="w-12 h-8 hover:bg-green-200"
               onClick={() => {
                 router.push({
                   pathname: router.pathname,
