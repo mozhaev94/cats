@@ -2,13 +2,18 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image'
 
-export default function layout({ children, title = 'Cats World' }: any): JSX.Element {
+export default function layout({ children, title = 'Cats World', description = 'This page about cats', image_url, }: any): JSX.Element {
   return (
     <>
       <Head>
         <title>{title}</title>
         <meta charSet="utf-8" />
-        <meta name="description" content="This page about cats" />
+        <meta name="description" content={description} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={image_url} />
+        <meta property="og:image:width" content="968" />
+        <meta property="og:image:height" content="504" />
         <link rel="icon" type="image/svg" href="/favicon.svg" />
       </Head>
       <div className="bg-red-50">

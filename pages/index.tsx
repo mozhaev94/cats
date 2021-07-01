@@ -3,6 +3,8 @@ import Card from '../components/Card'
 import Paginator from '../components/Paginator'
 import Searchbox from '../components/Searchbox'
 
+const ITEMS_ON_PAGE_COUNT: number = 10;
+
 interface CatsProps {
   cats: Cats[],
   countPages: number,
@@ -43,8 +45,7 @@ export async function getServerSideProps(params: any) {
   });
   const countCats: number = Number(res.headers.get('cats-count'));
   const cats = await res.json();
-  const countCatsInOnePage: number = (await (await fetch(`https://cats-api.strsqr.cloud/cats`)).json()).length;
-  const countPages: number = Math.ceil(countCats / countCatsInOnePage);
+  const countPages: number = Math.ceil(countCats / ITEMS_ON_PAGE_COUNT);
 
   return {
     props: {
