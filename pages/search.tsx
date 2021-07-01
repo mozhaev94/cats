@@ -19,7 +19,6 @@ interface Cats {
 
 export default function Search({ cats, countPages }: SearchProps) {
   const router = useRouter();
-  console.log(router);
   return (
     <>
       <Layout>
