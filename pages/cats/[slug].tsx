@@ -16,7 +16,6 @@ interface Cat {
 }
 
 export default function Cat({ cat }: CatProps): JSX.Element {
-  console.log(cat)
   return (
     <>
       <Layout title={cat.name}>
@@ -27,8 +26,8 @@ export default function Cat({ cat }: CatProps): JSX.Element {
             width={400}
             alt="pretty cat" />
         </div>
-        <h1>{cat.name}</h1>
-        <h1>{cat.description}</h1>
+        <h1 className="flex justify-center mt-6 mb-6 text-3xl">{cat.name}</h1>
+        <h1 className="leading-6 text-lg mb-20">{cat.description}</h1>
       </Layout>
     </>
   )
