@@ -18,7 +18,7 @@ interface Cat {
 export default function Cat({ cat }: CatProps): JSX.Element {
   return (
     <>
-      <Layout title={cat.name}>
+      <Layout title={cat.name} description={cat.description} image_url={cat.image_url}>
         <div className="flex justify-center mt-8">
           <Image
             src={cat.image_url}
