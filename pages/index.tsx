@@ -22,17 +22,15 @@ interface Cats {
 export default function Home({ cats, countPages }: CatsProps): JSX.Element {
   return (
     <Layout>
-      <div className="mt-8 ">
-        <h1 className="text-center text-4xl mb-8">Who will be your pet?</h1>
+      <div className="container mx-auto">
+        <div className="grid grid-cols-4 gap-4 mb-8 mt-8">
+          {cats.map((cat) => (
+            <Card path={cat.image_url} name={cat.name} key={cat.id} slug={cat.slug}></Card>
+          ))}
+        </div>
+        <Paginator countPages={countPages} ></Paginator>
+        <div className="mb-8"></div>
       </div>
-      <Searchbox />
-      <div className="grid grid-cols-4 gap-4 mb-8">
-        {cats.map((cat) => (
-          <Card path={cat.image_url} name={cat.name} key={cat.id} slug={cat.slug}></Card>
-        ))}
-      </div>
-      <Paginator countPages={countPages}></Paginator>
-      <div className="mb-8"></div>
     </Layout >
   )
 }
