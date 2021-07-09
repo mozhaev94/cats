@@ -2,7 +2,7 @@ import Layout from '../components/Layout'
 import Card from '../components/Card'
 import Paginator from '../components/Paginator'
 import Searchbox from '../components/Searchbox'
-import { useRouter } from 'next/router'
+import Image from 'next/image';
 
 const ITEMS_ON_PAGE_COUNT: number = 10;
 
@@ -20,20 +20,35 @@ interface Cats {
 }
 
 export default function Search({ cats, countPages }: SearchProps) {
-  const router = useRouter();
+  if (cats.length === 0) {
+    return (
+      <Layout>
+        <div className="container mx-auto">
+          <div className="mt-8 ">
+            <div className="flex flex-col justify-center">
+              <h1 className='text-center text-4xl'>К сожалению ничего не нашлось :(</h1>
+              <Image
+                src="/sad.svg"
+                width={300}
+                height={300}
+              ></Image>
+            </div>
+          </div>
+        </div>
+      </Layout >
+    )
+  }
   return (
     <>
       <Layout>
-        <div className="mt-8 ">
-          <h1 className="text-center text-4xl mb-8">Who will be your pet?</h1>
+        <div className="container mx-auto">
+          <div className="grid grid-cols-4 gap-4 mb-8 mt-8">
+            {cats.map((cat) => (
+              <Card path={cat.image_url} name={cat.name} key={cat.id} slug={cat.slug}></Card>
+            ))}
+          </div>
+          <Paginator countPages={countPages}></Paginator>
         </div>
-        <Searchbox />
-        <div className="grid grid-cols-4 gap-4 mb-8">
-          {cats.map((cat) => (
-            <Card path={cat.image_url} name={cat.name} key={cat.id} slug={cat.slug}></Card>
-          ))}
-        </div>
-        <Paginator countPages={countPages}></Paginator>
       </Layout >
   )
     </>
