@@ -1,6 +1,6 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface CardProps {
   path: string;
@@ -13,12 +13,12 @@ export default function Card({ path, name, slug }: CardProps): JSX.Element {
   return (
     <>
       <div className="border-2 rounded-3xl">
-        <div className="">
-          <Image src={path} className="object-contain rounded-t-3xl"
+        <div>
+          <Link href={`/cats/${encodeURIComponent(slug)}`}><a><Image src={path} className="object-contain rounded-t-3xl"
             width={400}
             height={400}
-            alt="pretty cat"
-          />
+            alt={name}
+          /></a></Link>
         </div>
         <div className="text-center w-86 mb-2 mt-2 text-xl">
           <Link href={`/cats/${encodeURIComponent(slug)}`}><a><h1 className="p-2">{name}</h1></a></Link>
