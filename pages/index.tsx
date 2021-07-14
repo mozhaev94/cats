@@ -1,25 +1,22 @@
-import Layout from '../components/Layout'
-import Card from '../components/Card'
-import Paginator from '../components/Paginator'
-import Searchbox from '../components/Searchbox'
+import Layout from "../components/Layout";
+import Card from "../components/Card";
+import Paginator from "../components/Paginator";
 
 const ITEMS_ON_PAGE_COUNT: number = 10;
 
 interface CatsProps {
   cats: Cats[],
   countPages: number,
-  breedSlug: string,
+  parameter: number,
 }
 interface Cats {
   id: number,
   name: string,
   slug: string,
   image_url: string,
-  created_at: string,
-  updated_at: string,
 }
 
-export default function Home({ cats, countPages }: CatsProps): JSX.Element {
+export default function Home({ cats, countPages, parameter }: CatsProps): JSX.Element {
   return (
     <Layout>
       <div className="container mx-auto">
@@ -28,7 +25,7 @@ export default function Home({ cats, countPages }: CatsProps): JSX.Element {
             <Card path={cat.image_url} name={cat.name} key={cat.id} slug={cat.slug}></Card>
           ))}
         </div>
-        <Paginator countPages={countPages} ></Paginator>
+        <Paginator countPages={countPages} parameter={parameter}></Paginator>
         <div className="mb-8"></div>
       </div>
     </Layout >
@@ -37,11 +34,11 @@ export default function Home({ cats, countPages }: CatsProps): JSX.Element {
 
 
 export async function getServerSideProps(params: any) {
-  const parameter = params.query.p === undefined ? 1 : params.query.p;
-  const res = await fetch(`https://cats-api.strsqr.cloud/cats?p=${parameter}`, {
-    method: 'GET',
+  const parameter = Number(params.query.p === undefined ? 1 : params.query.p);
+  const res = await fetch(`${process.env.API_URL}?p=${parameter}`, {
+    method: "GET",
   });
-  const countCats: number = Number(res.headers.get('cats-count'));
+  const countCats: number = Number(res.headers.get("cats-count"));
   const cats = await res.json();
   const countPages: number = Math.ceil(countCats / ITEMS_ON_PAGE_COUNT);
 
@@ -49,6 +46,7 @@ export async function getServerSideProps(params: any) {
     props: {
       cats,
       countPages,
+      parameter,
     },
   }
 }
