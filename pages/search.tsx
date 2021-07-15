@@ -3,22 +3,11 @@ import Card from "../components/Card";
 import Paginator from "../components/Paginator";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { CatsProps } from "./index"
 
 const ITEMS_ON_PAGE_COUNT: number = 10;
 
-interface SearchProps {
-  cats: Cats[]
-  countPages: number,
-  parameter: number,
-}
-interface Cats {
-  id: number,
-  name: string,
-  slug: string,
-  image_url: string,
-}
-
-export default function Search({ cats, countPages, parameter }: SearchProps) {
+export default function Search({ cats, count_pages, parameter }: CatsProps) {
   const router = useRouter();
   if (cats.length === 0) {
     return (
@@ -47,7 +36,7 @@ export default function Search({ cats, countPages, parameter }: SearchProps) {
               <Card path={cat.image_url} name={cat.name} key={cat.id} slug={cat.slug}></Card>
             ))}
           </div>
-          <Paginator countPages={countPages} parameter={parameter}></Paginator>
+          <Paginator count_pages={count_pages} parameter={parameter}></Paginator>
         </div>
       </Layout >
   )
