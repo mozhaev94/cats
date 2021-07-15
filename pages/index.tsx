@@ -4,19 +4,19 @@ import Paginator from "../components/Paginator";
 
 const ITEMS_ON_PAGE_COUNT: number = 10;
 
-interface CatsProps {
+export interface CatsProps {
   cats: Cats[],
-  countPages: number,
+  count_pages: number,
   parameter: number,
 }
-interface Cats {
+export interface Cats {
   id: number,
   name: string,
   slug: string,
   image_url: string,
 }
 
-export default function Home({ cats, countPages, parameter }: CatsProps): JSX.Element {
+export default function Home({ cats, count_pages, parameter }: CatsProps): JSX.Element {
   return (
     <Layout>
       <div className="container mx-auto">
@@ -25,7 +25,7 @@ export default function Home({ cats, countPages, parameter }: CatsProps): JSX.El
             <Card path={cat.image_url} name={cat.name} key={cat.id} slug={cat.slug}></Card>
           ))}
         </div>
-        <Paginator countPages={countPages} parameter={parameter}></Paginator>
+        <Paginator count_pages={count_pages} parameter={parameter}></Paginator>
         <div className="mb-8"></div>
       </div>
     </Layout >
@@ -40,12 +40,12 @@ export async function getServerSideProps(params: any) {
   });
   const countCats: number = Number(res.headers.get("cats-count"));
   const cats = await res.json();
-  const countPages: number = Math.ceil(countCats / ITEMS_ON_PAGE_COUNT);
+  const count_pages: number = Math.ceil(countCats / ITEMS_ON_PAGE_COUNT);
 
   return {
     props: {
       cats,
-      countPages,
+      count_pages,
       parameter,
     },
   }
