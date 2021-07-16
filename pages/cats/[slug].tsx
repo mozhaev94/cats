@@ -1,5 +1,6 @@
 import Layout from "../../components/Layout";
 import Image from "next/image";
+import { toSnakeCaseDescription } from "../../mapper/map";
 
 interface CatProps {
   cat: Cat,
@@ -10,7 +11,7 @@ interface Cat {
   id: number,
   name: string,
   slug: string,
-  image_url: string,
+  imageUrl: string,
   description: string,
 }
 
@@ -58,13 +59,13 @@ export default function Cat({ cat, description }: CatProps): JSX.Element {
 
   return (
     <>
-      <Layout title={cat.name} description={cat.description} image_url={cat.image_url}>
+      <Layout title={cat.name} description={cat.description} imageUrl={cat.imageUrl}>
         <div className="container mx-auto bg-gray-100 p-10 mt-8 rounded-t-3xl">
           <h1 className="flex justify-center text-3xl font-bold">{cat.name}</h1>
           <div className="border-b-2 border-black mt-4 mb-4"></div>
           <div className="w-auto inline-block h-1/3 float-right pl-8">
             <Image
-              src={cat.image_url}
+              src={cat.imageUrl}
               height={500}
               width={500}
               alt={cat.name}
@@ -89,8 +90,9 @@ export async function getServerSideProps({ params }: any) {
   const res = await fetch(`${process.env.API_URL}/${encodeURIComponent(params.slug)}`, {
     method: "GET",
   })
-  const cat = await res.json()
+  const cat = toSnakeCaseDescription(await res.json());
   const description = cat.description.split("\n");
+  console.log(cat)
   return {
     props: {
       cat,

@@ -4,10 +4,11 @@ import Paginator from "../components/Paginator";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { CatsProps } from "./index"
+import { toSnakeCase } from "../mapper/map";
 
 const ITEMS_ON_PAGE_COUNT: number = 10;
 
-export default function Search({ cats, count_pages, parameter }: CatsProps) {
+export default function Search({ cats, countPages, parameter }: CatsProps) {
   const router = useRouter();
   if (cats.length === 0) {
     return (
@@ -33,10 +34,10 @@ export default function Search({ cats, count_pages, parameter }: CatsProps) {
         <div className="container mx-auto">
           <div className="grid grid-cols-4 gap-4 mb-8 mt-8">
             {cats.map((cat) => (
-              <Card path={cat.image_url} name={cat.name} key={cat.id} slug={cat.slug}></Card>
+              <Card path={cat.imageUrl} name={cat.name} key={cat.id} slug={cat.slug}></Card>
             ))}
           </div>
-          <Paginator count_pages={count_pages} parameter={parameter}></Paginator>
+          <Paginator countPages={countPages} parameter={parameter}></Paginator>
         </div>
       </Layout >
   )
@@ -51,7 +52,7 @@ export async function getServerSideProps(params: any) {
     method: "GET",
   });
   const countCats: number = Number(res.headers.get("cats-count"));
-  const cats = await res.json();
+  const cats = toSnakeCase(await res.json());
   const countPages: number = Math.ceil(countCats / ITEMS_ON_PAGE_COUNT);
   return {
     props: {
