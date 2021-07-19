@@ -21,7 +21,7 @@ export default function Card({ path, name, slug }: CardProps): JSX.Element {
           /></a></Link>
         </div>
         <div className="text-center w-86 mb-2 mt-2 text-xl">
-          <Link href={`/cats/${encodeURIComponent(slug)}`}><a><h1 className="p-2">{name}</h1></a></Link>
+          <Link href={`/cats/${encodeURIComponent(slug)}`}><a><h2 className="p-2">{name}</h2></a></Link>
         </div>
       </div>
     </>
